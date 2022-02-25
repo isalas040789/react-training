@@ -15,10 +15,14 @@ function _TodoSearch(props) {
     setTodoList(newList);
   };
 
+  const handleOnChange = (event) => {
+    setTerm(event.target.value);
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
       <br />
-      <Search placeholder="Search a title or description here" onSearch={onSearch} enterButton />
+      <Search placeholder="Search a title or description here" onSearch={onSearch} enterButton value={term} onChange={handleOnChange} />
       <br />
     </div>
   );
