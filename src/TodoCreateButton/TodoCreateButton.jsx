@@ -1,28 +1,31 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, Input, Button } from "antd";
 
 function _TodoCreateButton(props) {
-  const { todoList, setTodoList } = props;
-  const [title, setTitle] = React.useState("");
-  const [description, setDescription] = React.useState("");
+  const dispatch = useDispatch();
+  const todos = useSelector((state) => {
+    return state.todos;
+  });
+
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
     if (!values.title || !values.description) return;
 
-    if (todoList.some((e) => e.title === values.title)) {
+    if (todos.some((e) => e.title === values.title)) {
       alert("This title already exists");
       return;
     }
 
-    setTodoList([
-      ...todoList,
-      {
-        title: values.title,
-        body: values.description,
-        visible: true,
-      },
-    ]);
+    const newTodoElement = {
+      title: values.title,
+      body: values.description,
+      visible: true,
+    };
+
+    dispatch({ type: "todos/todoAdded", payload: newTodoElement });
+
     form.resetFields();
   };
 

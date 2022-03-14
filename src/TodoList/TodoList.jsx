@@ -1,8 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { TodoItem } from "../TodoItem";
 
 function _TodoList(props) {
-  const { todoList } = props;
+  const todos = useSelector((state) => {
+    return state.todos;
+  });
   return (
     <div
       style={{
@@ -10,7 +13,7 @@ function _TodoList(props) {
         flexWrap: "wrap",
       }}
     >
-      {todoList.map((e, index) => {
+      {todos.map((e, index) => {
         return e.visible ? <TodoItem key={e.title} item={e}></TodoItem> : null;
       })}
     </div>
